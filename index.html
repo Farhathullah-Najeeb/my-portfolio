@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farhathullah | Software Developer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Enhanced Custom Cursor Styles */
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #6366F1;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.15s ease-out;
+            transform: translate(-50%, -50%) scale(1);
+            mix-blend-mode: difference;
+            background: rgba(99, 102, 241, 0.1);
+            will-change: transform, width, height;
+        }
+
+        .custom-cursor-inner {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: #A855F7;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.05s ease;
+            transform: translate(-50%, -50%);
+            will-change: transform, width, height;
+        }
+
+        /* Interactive hover effects */
+        a:hover, button:hover, .hover-target:hover {
+            cursor: none;
+        }
+
+        a:hover ~ .custom-cursor,
+        button:hover ~ .custom-cursor,
+        .hover-target:hover ~ .custom-cursor {
+            width: 50px;
+            height: 50px;
+            border-color: #A855F7;
+            opacity: 0.7;
+            background: rgba(168, 85, 247, 0.2);
+        }
+
+        a:hover ~ .custom-cursor-inner,
+        button:hover ~ .custom-cursor-inner,
+        .hover-target:hover ~ .custom-cursor-inner {
+            width: 15px;
+            height: 15px;
+            background: #6366F1;
+        }
+
+        /* Hide default cursor */
+        body {
+            cursor: none;
+        }
+    </style>
+</head>
+<body class="text-gray-300">
+    <!-- Custom Cursor Elements -->
+    <div class="custom-cursor"></div>
+    <div class="custom-cursor-inner"></div>
+
+    <div id="navigation"></div>
+    <div id="hero"></div>
+    <div id="about"></div>
+    <div id="projects"></div>
+    <div id="skills"></div>
+    <div id="contact"></div>
+    <div id="footer"></div>
+
+    <script>
+        // Function to load HTML sections
+        async function loadSection(sectionId, filePath) {
+            try {
+                const response = await fetch(filePath);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const content = await response.text();
+                document.getElementById(sectionId).innerHTML = content;
+                console.log(`${sectionId} loaded successfully`);
+            } catch (error) {
+                console.error(`Error loading ${sectionId} from ${filePath}:`, error);
+                document.getElementById(sectionId).innerHTML = `<p>Error loading ${sectionId} section</p>`;
+            }
+        }
+
+        // Load all sections
+        loadSection('navigation', 'sections/navigation.html');
+        loadSection('hero', 'sections/hero.html');
+        loadSection('about', 'sections/about.html');
+        loadSection('projects', 'sections/projects.html');
+        loadSection('skills', 'sections/skills.html');
+        loadSection('contact', 'sections/contact.html');
+        loadSection('footer', 'sections/footer.html');
+
+        // Custom Cursor Functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const cursor = document.querySelector('.custom-cursor');
+            const cursorInner = document.querySelector('.custom-cursor-inner');
+
+            // Smooth cursor movement with interpolation
+            let currentX = 0;
+            let currentY = 0;
+
+            function animateCursor() {
+                // Linear interpolation for smoother cursor movement
+                currentX += (mouseX - currentX) * 0.2;
+                currentY += (mouseY - currentY) * 0.2;
+
+                cursor.style.left = `${currentX}px`;
+                cursor.style.top = `${currentY}px`;
+                cursorInner.style.left = `${currentX}px`;
+                cursorInner.style.top = `${currentY}px`;
+
+                requestAnimationFrame(animateCursor);
+            }
+
+            let mouseX = 0;
+            let mouseY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            // Start cursor animation
+            animateCursor();
+
+            // Cursor visibility
+            document.addEventListener('mouseenter', () => {
+                cursor.style.opacity = '1';
+                cursorInner.style.opacity = '1';
+            });
+
+            document.addEventListener('mouseleave', () => {
+                cursor.style.opacity = '0';
+                cursorInner.style.opacity = '0';
+            });
+        });
+    </script>
+</body>
+</html>
