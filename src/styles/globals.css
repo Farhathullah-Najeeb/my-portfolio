@@ -69,8 +69,14 @@ h1 { font-size: clamp(2.2rem, 5vw, 4.4rem); margin: 0; line-height: 1.03; }
 .social-links { display: flex; gap: 10px; }
 .social-links a {
   width: 38px; height: 38px; border-radius: 50%;
-  border: 1px solid var(--border); display: grid; place-items: center; color: var(--muted);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  line-height: 0;
 }
+.social-links a svg { width: 18px; height: 18px; display: block; }
 .social-links a:hover { color: var(--primary); border-color: var(--primary); }
 
 .profile-card { border-radius: 20px; padding: 18px; max-width: 460px; justify-self: end; width: 100%; }
@@ -110,14 +116,25 @@ blockquote { border-left: 3px solid var(--primary); margin: 18px 0; padding: 10p
 
 .projects-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 1.5vw, 24px); }
 .project-card { border-radius: 16px; padding: 14px; display: flex; flex-direction: column; }
-.project-card img {
+.project-media {
   width: 100%;
-  border-radius: 12px;
   aspect-ratio: 16 / 10;
-  object-fit: contain;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.03);
   margin-bottom: 12px;
   padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.project-card img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-position: center center;
+  object-fit: contain;
+  display: block;
 }
 .project-category { color: var(--primary); font-size: 0.82rem; margin: 0; }
 .project-card h3 { margin: 8px 0; }

@@ -10,7 +10,9 @@ function ProjectCard({ project, index }) {
       transition={{ duration: 0.55, delay: index * 0.08 }}
       whileHover={{ y: -8 }}
     >
-      <img src={project.image} alt={`${project.name} preview`} loading="lazy" />
+      <div className="project-media">
+        <img src={project.image} alt={`${project.name} preview`} loading="lazy" />
+      </div>
       <p className="project-category">{project.category}</p>
       <h3>{project.name}</h3>
       <p className="project-description">{project.description}</p>

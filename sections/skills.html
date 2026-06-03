@@ -2,413 +2,553 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Technical Skills</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Nebula Skills | Interactive Tech Stack</title>
+    <!-- Tailwind + Font Awesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- GSAP for ultra-smooth advanced animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <style>
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
+        /* Custom advanced styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        @keyframes pulse {
-            0%, 100% { opacity: 0.7; }
-            50% { opacity: 1; }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #0a0f1e, #03050b);
+            overflow-x: hidden;
         }
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
+
+        /* animated gradient text */
+        .animated-gradient-text {
+            background: linear-gradient(135deg, #a5b4fc, #c084fc, #f0abfc, #818cf8);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: aurora 8s ease infinite;
         }
-        .skill-box {
-            transition: all 0.4s ease;
-            will-change: transform, box-shadow;
-            perspective: 1000px;
+
+        @keyframes aurora {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-        .skill-card {
-            background: rgba(31, 41, 55, 0.6);
+
+        /* Floating orb animation */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatOrb 20s infinite alternate ease-in-out;
+        }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, -30px) scale(1.2); }
+        }
+
+        /* Glow pulse on cards */
+        .glow-pulse {
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            padding: 2px;
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(139, 92, 246, 0.7), rgba(59, 130, 246, 0));
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .skill-card-enhanced {
+            background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(99, 102, 241, 0.3);
-            border-radius: 16px;
-            overflow: hidden;
-            position: relative;
+            border-radius: 28px;
+            transition: all 0.45s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             transform-style: preserve-3d;
-            transition: all 0.4s ease;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
         }
-        .skill-box:hover .skill-card {
-            transform: translateZ(10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+        .skill-card-enhanced:hover {
+            border-color: rgba(139, 92, 246, 0.7);
+            box-shadow: 0 25px 45px -12px rgba(99, 102, 241, 0.5), 0 0 0 1px rgba(139, 92, 246, 0.2);
+            transform: translateY(-8px) scale(1.02);
         }
-       
-        .skill-box:hover .skill-card::before {
-            opacity: 0.8;
-            animation: pulse 3s ease infinite;
+
+        .glass-stat {
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 28px;
+            transition: all 0.4s;
         }
-        .progress-bar {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 9999px;
-            overflow: hidden;
-            height: 5px;
-            position: relative;
+
+        .glass-stat:hover {
+            transform: translateY(-6px);
+            border-color: rgba(168, 85, 247, 0.7);
+            box-shadow: 0 20px 35px -15px rgba(139, 92, 246, 0.4);
         }
-        .progress-fill {
-            height: 100%;
-            transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
-            background: linear-gradient(to right, #6366F1, #A855F7);
+
+        /* animated bar glow */
+        .progress-fill-neon {
+            background: linear-gradient(90deg, #6366f1, #c084fc, #a855f7);
+            background-size: 200% auto;
+            animation: shimmerBar 2.2s linear infinite;
         }
-        .progress-fill::after {
-            content: '';
+
+        @keyframes shimmerBar {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        /* Ripple effect */
+        .ripple {
             position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+            transform: scale(0);
+            animation: rippleAnim 0.6s ease-out;
+            pointer-events: none;
+        }
+
+        @keyframes rippleAnim {
+            to {
+                transform: scale(6);
+                opacity: 0;
+            }
+        }
+
+        /* icon hover burst */
+        .icon-burst {
+            transition: all 0.2s cubic-bezier(0.34, 1.2, 0.64, 1);
+        }
+        .skill-card-enhanced:hover .icon-burst {
+            transform: scale(1.15) rotate(3deg);
+            filter: drop-shadow(0 0 6px #a855f7);
+        }
+
+        /* particles canvas */
+        #particleCanvas {
+            position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.8s ease;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
         }
-        .skill-box:hover .progress-fill::after {
-            transform: translateX(100%);
+
+        .stats-digit {
+            display: inline-block;
         }
-        .icon-container {
-            transition: all 0.4s ease;
-            background: rgba(99, 102, 241, 0.15);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.1);
-        }
-        .skill-box:hover .icon-container {
-            transform: scale(1.1);
-            background: rgba(124, 58, 237, 0.25);
-            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.2);
-        }
-        /* Right Side Stats Panel */
-        .stats-panel {
-            background: rgba(31, 41, 55, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            border-radius: 16px;
-            padding: 1.5rem;
-            transition: all 0.4s ease;
-        }
-        .stats-panel:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-        }
-        .stats-item {
-            animation: fadeIn 0.5s ease forwards;
-            opacity: 0;
-        }
-        .stats-item:nth-child(1) { animation-delay: 0.1s; }
-        .stats-item:nth-child(2) { animation-delay: 0.2s; }
-        .stats-item:nth-child(3) { animation-delay: 0.3s; }
     </style>
 </head>
-<body class="bg-gray-900 text-white">
-    <section class="container mx-auto px-4 py-20 relative overflow-hidden">
-        <!-- Gradient Background Elements -->
-        <div class="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-br from-indigo-900/20 to-purple-900/20 -z-10"></div>
+<body class="relative">
 
-        <!-- Section Header -->
-        <div class="text-center mb-12">
-            <div class="inline-block relative">
-                <h2 class="text-5xl font-bold mb-4">
-                    <span class="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Technical</span> Skills
-                </h2>
-                <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500/30 via-purple-500/50 to-indigo-500/30 rounded-full"></div>
+    <!-- Dynamic Particle Background -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Floating orbs for atmos -->
+    <div class="orb w-96 h-96 bg-indigo-600/20 top-20 left-[-100px]"></div>
+    <div class="orb w-80 h-80 bg-purple-600/20 bottom-20 right-[-50px]"></div>
+    <div class="orb w-[500px] h-[500px] bg-fuchsia-600/10 top-1/3 right-[20%]"></div>
+
+    <section class="relative z-10 container mx-auto px-4 py-20 md:py-28 overflow-hidden">
+        
+        <!-- Header with reveal animation -->
+        <div class="text-center mb-16 relative">
+            <div class="inline-block">
+                <span class="inline-block px-4 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/40 text-indigo-300 text-sm font-mono tracking-wide mb-4 backdrop-blur-sm">
+                    <i class="fas fa-code-branch mr-1"></i> expertise showcase
+                </span>
+                <h1 class="text-6xl md:text-7xl font-extrabold mb-5 tracking-tight">
+                    <span class="animated-gradient-text">Technical</span>
+                    <span class="text-white drop-shadow-lg"> Arsenal</span>
+                </h1>
+                <div class="h-1 w-32 mx-auto bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full mb-5"></div>
+                <p class="text-gray-300 text-xl max-w-2xl mx-auto font-light">Cutting-edge mastery in mobile, backend & modern frameworks — transforming ideas into digital reality.</p>
             </div>
-            <p class="text-xl text-gray-300 max-w-2xl mx-auto mt-6">
-                Expertise in cutting-edge technologies for modern development
-            </p>
         </div>
 
-        <!-- Main Content Container -->
-        <div class="flex flex-col md:flex-row justify-between items-center gap-8 max-w-6xl mx-auto min-h-[400px]">
-            <!-- Skills Grid -->
-            <div class="w-full md:w-3/4">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Mobile Development -->
-                    <div class="skill-box">
-                        <div class="skill-card p-6 h-full">
+        <!-- main flex row -->
+        <div class="flex flex-col xl:flex-row justify-center gap-10 max-w-7xl mx-auto">
+            
+            <!-- Skills Grid with staggered 3D cards -->
+            <div class="w-full xl:w-3/4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 auto-rows-fr">
+                    
+                    <!-- Skill 1: Mobile -->
+                    <div class="skill-card-wrapper opacity-0 transform translate-y-10" data-delay="0.05">
+                        <div class="skill-card-enhanced p-6 h-full relative group overflow-hidden">
+                            <div class="glow-pulse"></div>
                             <div class="flex items-center mb-6">
-                                <div class="icon-container w-12 h-12 rounded-lg flex items-center justify-center mr-4">
-                                    <i class="fas fa-mobile-alt text-2xl text-indigo-400"></i>
+                                <div class="icon-container w-14 h-14 rounded-2xl flex items-center justify-center mr-4 bg-gradient-to-br from-indigo-500/20 to-purple-600/20 border border-indigo-400/40 shadow-lg icon-burst">
+                                    <i class="fas fa-mobile-alt text-2xl text-indigo-300"></i>
                                 </div>
-                                <h3 class="text-xl font-semibold text-white">Mobile Development</h3>
+                                <h3 class="text-2xl font-bold bg-gradient-to-r from-indigo-200 to-white bg-clip-text text-transparent">Mobile Dev</h3>
                             </div>
-                            <div class="space-y-5">
+                            <div class="space-y-6">
                                 <div>
-                                    <div class="flex justify-between mb-2 text-gray-300">
-                                        <span>Dart Programming</span>
-                                        <span class="text-indigo-300 font-medium">95%</span>
-                                    </div>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 95%"></div>
-                                    </div>
+                                    <div class="flex justify-between mb-2 text-gray-200 font-medium"><span><i class="fab fa-dart text-blue-400 mr-2"></i>Dart</span><span class="text-indigo-300">95%</span></div>
+                                    <div class="progress-bar bg-gray-700/70 h-2 rounded-full overflow-hidden"><div class="progress-fill-neon h-full rounded-full" style="width: 0%" data-width="95"></div></div>
                                 </div>
                                 <div>
-                                    <div class="flex justify-between mb-2 text-gray-300">
-                                        <span>Flutter Framework</span>
-                                        <span class="text-indigo-300 font-medium">92%</span>
-                                    </div>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 92%"></div>
-                                    </div>
+                                    <div class="flex justify-between mb-2 text-gray-200 font-medium"><span><i class="fab fa-flutter text-sky-400 mr-2"></i>Flutter</span><span class="text-indigo-300">92%</span></div>
+                                    <div class="progress-bar bg-gray-700/70 h-2 rounded-full overflow-hidden"><div class="progress-fill-neon h-full rounded-full" style="width: 0%" data-width="92"></div></div>
                                 </div>
+                            </div>
+                            <div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition text-indigo-400 text-xs">⚡ optimized</div>
+                        </div>
+                    </div>
+
+                    <!-- Skill 2: Backend -->
+                    <div class="skill-card-wrapper opacity-0 transform translate-y-10" data-delay="0.1">
+                        <div class="skill-card-enhanced p-6 h-full group">
+                            <div class="flex items-center mb-6">
+                                <div class="icon-container w-14 h-14 rounded-2xl flex items-center justify-center mr-4 bg-gradient-to-br from-purple-500/20 to-pink-600/20 border border-purple-400/40 icon-burst">
+                                    <i class="fas fa-cloud-arrow-up text-2xl text-purple-300"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold bg-gradient-to-r from-purple-200 to-white bg-clip-text text-transparent">Backend & APIs</h3>
+                            </div>
+                            <div class="space-y-6">
+                                <div><div class="flex justify-between mb-2"><span><i class="fas fa-fire text-orange-400 mr-2"></i>Firebase</span><span>85%</span></div><div class="progress-bar bg-gray-700/70 h-2 rounded-full"><div class="progress-fill-neon h-full rounded-full" style="width:0%" data-width="85"></div></div></div>
+                                <div><div class="flex justify-between mb-2"><span><i class="fas fa-plug text-green-400 mr-2"></i>API Integration</span><span>88%</span></div><div class="progress-bar bg-gray-700/70 h-2 rounded-full"><div class="progress-fill-neon h-full rounded-full" style="width:0%" data-width="88"></div></div></div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Backend & APIs -->
-                    <div class="skill-box">
-                        <div class="skill-card p-6 h-full">
+                    <!-- Skill 3: State Management -->
+                    <div class="skill-card-wrapper opacity-0 transform translate-y-10" data-delay="0.15">
+                        <div class="skill-card-enhanced p-6 h-full group">
                             <div class="flex items-center mb-6">
-                                <div class="icon-container w-12 h-12 rounded-lg flex items-center justify-center mr-4">
-                                    <i class="fas fa-server text-2xl text-purple-400"></i>
+                                <div class="icon-container w-14 h-14 rounded-2xl flex items-center justify-center bg-indigo-500/20 border border-indigo-400/40 icon-burst">
+                                    <i class="fas fa-cogs text-2xl text-indigo-300"></i>
                                 </div>
-                                <h3 class="text-xl font-semibold text-white">Backend & APIs</h3>
+                                <h3 class="text-2xl font-bold bg-gradient-to-r from-indigo-200 to-white bg-clip-text text-transparent">State Mgmt</h3>
                             </div>
-                            <div class="space-y-5">
-                                <div>
-                                    <div class="flex justify-between mb-2 text-gray-300">
-                                        <span>Firebase</span>
-                                        <span class="text-purple-300 font-medium">85%</span>
-                                    </div>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 85%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between mb-2 text-gray-300">
-                                        <span>API Integration</span>
-                                        <span class="text-purple-300 font-medium">88%</span>
-                                    </div>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 88%"></div>
-                                    </div>
-                                </div>
+                            <div class="space-y-6">
+                                <div><div class="flex justify-between"><span>Riverpod</span><span>88%</span></div><div class="progress-bar bg-gray-700/70 h-2 rounded-full mt-1"><div class="progress-fill-neon h-full rounded-full" style="width:0%" data-width="88"></div></div></div>
+                                <div><div class="flex justify-between"><span>Provider</span><span>92%</span></div><div class="progress-bar bg-gray-700/70 h-2 rounded-full mt-1"><div class="progress-fill-neon h-full rounded-full" style="width:0%" data-width="92"></div></div></div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- State Management -->
-                    <div class="skill-box">
-                        <div class="skill-card p-6 h-full">
+                    <!-- Skill 4: UI/UX -->
+                    <div class="skill-card-wrapper opacity-0 transform translate-y-10" data-delay="0.2">
+                        <div class="skill-card-enhanced p-6 h-full group">
                             <div class="flex items-center mb-6">
-                                <div class="icon-container w-12 h-12 rounded-lg flex items-center justify-center mr-4">
-                                    <i class="fas fa-cogs text-2xl text-indigo-400"></i>
+                                <div class="icon-container w-14 h-14 rounded-2xl flex items-center justify-center bg-pink-500/20 border border-pink-400/40 icon-burst">
+                                    <i class="fas fa-paintbrush-pencil text-2xl text-pink-300"></i>
                                 </div>
-                                <h3 class="text-xl font-semibold text-white">State Management</h3>
+                                <h3 class="text-2xl font-bold bg-gradient-to-r from-pink-200 to-white bg-clip-text text-transparent">UI/UX Design</h3>
                             </div>
-                            <div class="space-y-5">
-                                <div>
-                                    <div class="flex justify-between mb-2 text-gray-300">
-                                        <span>Riverpod</span>
-                                        <span class="text-indigo-300 font-medium">88%</span>
-                                    </div>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 88%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between mb-2 text-gray-300">
-                                        <span>Provider</span>
-                                        <span class="text-indigo-300 font-medium">92%</span>
-                                    </div>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 92%"></div>
-                                    </div>
-                                </div>
+                            <div class="space-y-6">
+                                <div><div class="flex justify-between"><span>Material Design</span><span>90%</span></div><div class="progress-bar bg-gray-700/70 h-2 rounded-full"><div class="progress-fill-neon h-full rounded-full" style="width:0%" data-width="90"></div></div></div>
+                                <div><div class="flex justify-between"><span>Responsive UI</span><span>88%</span></div><div class="progress-bar bg-gray-700/70 h-2 rounded-full"><div class="progress-fill-neon h-full rounded-full" style="width:0%" data-width="88"></div></div></div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- UI/UX Design -->
-                    <div class="skill-box">
-                        <div class="skill-card p-6 h-full">
+                    <!-- Skill 5: Database -->
+                    <div class="skill-card-wrapper opacity-0 transform translate-y-10" data-delay="0.25">
+                        <div class="skill-card-enhanced p-6 h-full group">
                             <div class="flex items-center mb-6">
-                                <div class="icon-container w-12 h-12 rounded-lg flex items-center justify-center mr-4">
-                                    <i class="fas fa-paint-brush text-2xl text-purple-400"></i>
+                                <div class="icon-container w-14 h-14 rounded-2xl flex items-center justify-center bg-emerald-500/20 border border-emerald-400/40 icon-burst">
+                                    <i class="fas fa-database text-2xl text-emerald-300"></i>
                                 </div>
-                                <h3 class="text-xl font-semibold text-white">UI/UX Design</h3>
+                                <h3 class="text-2xl font-bold bg-gradient-to-r from-emerald-200 to-white bg-clip-text text-transparent">Database</h3>
                             </div>
-                            <div class="space-y-5">
-                                <div>
-                                    <div class="flex justify-between mb-2 text-gray-300">
-                                        <span>Material Design</span>
-                                        <span class="text-purple-300 font-medium">90%</span>
-                                    </div>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 90%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between mb-2 text-gray-300">
-                                        <span>Responsive UI</span>
-                                        <span class="text-purple-300 font-medium">88%</span>
-                                    </div>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 88%"></div>
-                                    </div>
-                                </div>
+                            <div class="space-y-6">
+                                <div><div class="flex justify-between"><span>Firestore</span><span>85%</span></div><div class="progress-bar bg-gray-700/70 h-2 rounded-full"><div class="progress-fill-neon h-full rounded-full" style="width:0%" data-width="85"></div></div></div>
+                                <div><div class="flex justify-between"><span>SQLite</span><span>82%</span></div><div class="progress-bar bg-gray-700/70 h-2 rounded-full"><div class="progress-fill-neon h-full rounded-full" style="width:0%" data-width="82"></div></div></div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Database -->
-                    <div class="skill-box">
-                        <div class="skill-card p-6 h-full">
+                    <!-- Skill 6: DevOps + Tools -->
+                    <div class="skill-card-wrapper opacity-0 transform translate-y-10" data-delay="0.3">
+                        <div class="skill-card-enhanced p-6 h-full group">
                             <div class="flex items-center mb-6">
-                                <div class="icon-container w-12 h-12 rounded-lg flex items-center justify-center mr-4">
-                                    <i class="fas fa-database text-2xl text-indigo-400"></i>
+                                <div class="icon-container w-14 h-14 rounded-2xl flex items-center justify-center bg-cyan-500/20 border border-cyan-400/40 icon-burst">
+                                    <i class="fas fa-code-branch text-2xl text-cyan-300"></i>
                                 </div>
-                                <h3 class="text-xl font-semibold text-white">Database</h3>
+                                <h3 class="text-2xl font-bold bg-gradient-to-r from-cyan-200 to-white bg-clip-text text-transparent">DevOps</h3>
                             </div>
-                            <div class="space-y-5">
-                                <div>
-                                    <div class="flex justify-between mb-2 text-gray-300">
-                                        <span>Firestore</span>
-                                        <span class="text-indigo-300 font-medium">85%</span>
-                                    </div>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 85%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between mb-2 text-gray-300">
-                                        <span>SQLite</span>
-                                        <span class="text-indigo-300 font-medium">82%</span>
-                                    </div>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 82%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- DevOps -->
-                    <div class="skill-box">
-                        <div class="skill-card p-6 h-full">
-                            <div class="flex items-center mb-6">
-                                <div class="icon-container w-12 h-12 rounded-lg flex items-center justify-center mr-4">
-                                    <i class="fas fa-code-branch text-2xl text-purple-400"></i>
-                                </div>
-                                <h3 class="text-xl font-semibold text-white">DevOps</h3>
-                            </div>
-                            <div class="space-y-5">
-                                <div>
-                                    <div class="flex justify-between mb-2 text-gray-300">
-                                        <span>Git</span>
-                                        <span class="text-purple-300 font-medium">90%</span>
-                                    </div>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 90%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between mb-2 text-gray-300">
-                                        <span>CI/CD</span>
-                                        <span class="text-purple-300 font-medium">75%</span>
-                                    </div>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 75%"></div>
-                                    </div>
-                                </div>
+                            <div class="space-y-6">
+                                <div><div class="flex justify-between"><span><i class="fab fa-git-alt mr-1"></i>Git</span><span>90%</span></div><div class="progress-bar bg-gray-700/70 h-2 rounded-full"><div class="progress-fill-neon h-full rounded-full" style="width:0%" data-width="90"></div></div></div>
+                                <div><div class="flex justify-between"><span>CI/CD Pipelines</span><span>75%</span></div><div class="progress-bar bg-gray-700/70 h-2 rounded-full"><div class="progress-fill-neon h-full rounded-full" style="width:0%" data-width="75"></div></div></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Right Side Stats Panel -->
-            <div class="w-full md:w-1/4 flex items-center">
-                <div class="stats-panel w-full">
-                    <h3 class="text-xl font-semibold text-white mb-6 flex items-center">
-                        <span class="w-3 h-3 bg-purple-400 rounded-full mr-3 animate-pulse"></span>
-                        Quick Stats
-                    </h3>
-                    <div class="space-y-6">
-                        <div class="stats-item flex items-center">
-                            <i class="fas fa-code text-2xl text-indigo-400 mr-3"></i>
-                            <div>
-                                <div class="text-2xl font-bold text-indigo-300">100+</div>
-                                <div class="text-sm text-gray-400">Code Commits</div>
-                            </div>
+            <!-- Right animated Stats Panel with infinite count up -->
+            <div class="w-full xl:w-1/3 flex items-stretch">
+                <div class="glass-stat w-full p-7 flex flex-col justify-between backdrop-blur-md transform transition-all duration-500 hover:scale-[1.02]">
+                    <div>
+                        <div class="flex items-center gap-2 mb-8">
+                            <div class="w-2 h-2 rounded-full bg-purple-500 animate-ping"></div>
+                            <div class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></div>
+                            <h3 class="text-2xl font-bold tracking-wider bg-gradient-to-r from-purple-300 to-indigo-300 bg-clip-text text-transparent">⚡ Impact Metrics</h3>
                         </div>
-                        <div class="stats-item flex items-center">
-                            <i class="fas fa-clock text-2xl text-purple-400 mr-3"></i>
-                            <div>
-                                <div class="text-2xl font-bold text-purple-300">1000+</div>
-                                <div class="text-sm text-gray-400">Hours Coded</div>
+                        <div class="space-y-8">
+                            <div class="stats-group transform transition-all hover:translate-x-2">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-2xl bg-indigo-500/20 flex items-center justify-center border border-indigo-400/40"><i class="fas fa-code text-xl text-indigo-400"></i></div>
+                                    <div><span class="text-4xl font-black text-indigo-300 counter-digit" data-target="187">0</span><span class="text-2xl text-indigo-300">+</span><div class="text-gray-400 text-sm font-mono">Production Commits</div></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="stats-item flex items-center">
-                            <i class="fas fa-trophy text-2xl text-yellow-400 mr-3"></i>
-                            <div>
-                                <div class="text-2xl font-bold text-yellow-300">5+</div>
-                                <div class="text-sm text-gray-400">Achievements</div>
+                            <div class="stats-group transition-all hover:translate-x-2">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-2xl bg-purple-500/20 flex items-center justify-center border border-purple-400/40"><i class="fas fa-clock text-xl text-purple-400"></i></div>
+                                    <div><span class="text-4xl font-black text-purple-300 counter-digit" data-target="1240">0</span><span class="text-2xl">+</span><div class="text-gray-400 text-sm">Dev Hours Mastered</div></div>
+                                </div>
+                            </div>
+                            <div class="stats-group transition-all hover:translate-x-2">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-2xl bg-amber-500/20 flex items-center justify-center border border-amber-400/40"><i class="fas fa-trophy text-xl text-amber-400"></i></div>
+                                    <div><span class="text-4xl font-black text-amber-300 counter-digit" data-target="12">0</span><span class="text-2xl">+</span><div class="text-gray-400 text-sm">Innovation Awards</div></div>
+                                </div>
+                            </div>
+                            <div class="stats-group transition-all hover:translate-x-2">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-2xl bg-rose-500/20 flex items-center justify-center border border-rose-400/40"><i class="fas fa-globe text-xl text-rose-400"></i></div>
+                                    <div><span class="text-4xl font-black text-rose-300 counter-digit" data-target="24">0</span><span class="text-2xl">+</span><div class="text-gray-400 text-sm">Global Projects</div></div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="mt-8 pt-5 border-t border-white/10 text-center text-xs text-gray-400 flex justify-between">
+                        <span><i class="fas fa-chart-line text-green-400"></i> 98% satisfaction</span>
+                        <span><i class="fas fa-rocket text-indigo-400"></i> always scaling</span>
+                    </div>
                 </div>
             </div>
+        </div>
+        
+        <!-- Floating decorative elements -->
+        <div class="absolute bottom-10 left-5 opacity-20 pointer-events-none">
+            <i class="fas fa-circle-code text-7xl text-indigo-500"></i>
         </div>
     </section>
 
     <script>
-        // Animate progress bars on scroll into view
-        const animateOnScroll = () => {
-            document.querySelectorAll('.progress-fill').forEach(bar => {
-                const rect = bar.getBoundingClientRect();
-                if (rect.top < window.innerHeight * 0.8) {
-                    bar.style.width = bar.dataset.width;
+        // ---------- GSAP + ScrollTrigger Animations ----------
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Fade-up cards entrance animation
+        gsap.utils.toArray('.skill-card-wrapper').forEach((wrapper, i) => {
+            gsap.fromTo(wrapper, 
+                { opacity: 0, y: 60, rotationX: -10 },
+                {
+                    opacity: 1, y: 0, rotationX: 0,
+                    duration: 0.8,
+                    delay: i * 0.08,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: wrapper,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse",
+                    }
+                }
+            );
+        });
+
+        // Progress bar fill with GSAP
+        const fillProgressBars = () => {
+            document.querySelectorAll('.progress-fill-neon').forEach(bar => {
+                const targetWidth = bar.getAttribute('data-width');
+                if (targetWidth && bar.style.width !== targetWidth + '%') {
+                    gsap.to(bar, {
+                        width: targetWidth + '%',
+                        duration: 1.2,
+                        ease: "back.out(0.6)",
+                        scrollTrigger: {
+                            trigger: bar,
+                            start: "top 85%",
+                            once: true,
+                        }
+                    });
                 }
             });
         };
-
-        // Initialize animations
-        document.addEventListener('DOMContentLoaded', () => {
-            // Add floating animation to skill boxes
-            document.querySelectorAll('.skill-box').forEach((box, index) => {
-                box.style.animation = `float ${5 + Math.random() * 2}s ease-in-out infinite`;
-                box.style.animationDelay = `${index * 0.15}s`;
+        
+        // Counter animation for stats
+        const animateCounters = () => {
+            const counters = document.querySelectorAll('.counter-digit');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'), 10);
+                if (!counter.hasAttribute('data-animated')) {
+                    counter.setAttribute('data-animated', 'true');
+                    let current = 0;
+                    const increment = target / 55;
+                    const updateCounter = () => {
+                        current += increment;
+                        if (current < target) {
+                            counter.innerText = Math.floor(current);
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.innerText = target;
+                        }
+                    };
+                    // Trigger on visible
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                updateCounter();
+                                observer.disconnect();
+                            }
+                        });
+                    }, { threshold: 0.5 });
+                    observer.observe(counter);
+                }
             });
-
-            // Set initial progress bar width to 0 and store original width
-            document.querySelectorAll('.progress-fill').forEach(bar => {
-                bar.dataset.width = bar.style.width;
-                bar.style.width = '0';
-                setTimeout(() => {
-                    animateOnScroll();
-                }, 100);
+        };
+        
+        // Ripple effect on card click / hover interaction 
+        const addRipple = (e, element) => {
+            const rect = element.getBoundingClientRect();
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple';
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = e.clientX - rect.left - size/2 + 'px';
+            ripple.style.top = e.clientY - rect.top - size/2 + 'px';
+            element.style.position = 'relative';
+            element.style.overflow = 'hidden';
+            element.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        };
+        
+        document.querySelectorAll('.skill-card-enhanced').forEach(card => {
+            card.addEventListener('click', (e) => addRipple(e, card));
+            // Glow following mouse
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                const glow = card.querySelector('.glow-pulse');
+                if (glow) {
+                    glow.style.setProperty('--x', x + '%');
+                    glow.style.setProperty('--y', y + '%');
+                    glow.style.opacity = '0.6';
+                }
             });
+            card.addEventListener('mouseleave', () => {
+                const glow = card.querySelector('.glow-pulse');
+                if (glow) glow.style.opacity = '0';
+            });
+        });
 
-            // Add scroll listener for progress animations
-            window.addEventListener('scroll', animateOnScroll);
-            animateOnScroll(); // Run once on load
-
-            // Add tilt effect on hover for skill cards
-            const skillsContainer = document.querySelector('.grid');
-            skillsContainer.addEventListener('mousemove', (e) => {
-                const cards = document.querySelectorAll('.skill-card');
-                cards.forEach(card => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-
-                    const rotateX = -(y - rect.height / 2) / 20;
-                    const rotateY = (x - rect.width / 2) / 20;
-
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1)`;
-                    card.style.transition = 'transform 0.1s ease';
+        // ----- Particle Background (dynamic stars + tech feel) -----
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let particleCount = 130;
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.5 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.color = `rgba(${100 + Math.random() * 100}, ${80 + Math.random() * 100}, 255, ${Math.random() * 0.5 + 0.2})`;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+        
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+        
+        function animateParticles() {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            // connecting lines subtle
+            ctx.globalCompositeOperation = 'lighter';
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i+1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < 90) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(130, 100, 240, ${0.12 * (1 - dist/100)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            ctx.globalCompositeOperation = 'source-over';
+            requestAnimationFrame(animateParticles);
+        }
+        
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initParticles();
+        });
+        
+        resizeCanvas();
+        initParticles();
+        animateParticles();
+        
+        // Wait for load + trigger fill + counter
+        window.addEventListener('load', () => {
+            fillProgressBars();
+            animateCounters();
+            // additional floating glow effect on stats
+            const observerStats = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                    }
                 });
-            });
-
-            skillsContainer.addEventListener('mouseleave', () => {
-                const cards = document.querySelectorAll('.skill-card');
-                cards.forEach(card => {
-                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
-                    card.style.transition = 'transform 0.3s ease';
-                });
+            }, { threshold: 0.3 });
+            document.querySelectorAll('.glass-stat, .skill-card-enhanced').forEach(el => observerStats.observe(el));
+        });
+        
+        // extra parallax on scroll for orbs
+        document.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            document.querySelectorAll('.orb').forEach((orb, idx) => {
+                orb.style.transform = `translateY(${scrolled * 0.05 * (idx+1)}px)`;
             });
         });
     </script>
